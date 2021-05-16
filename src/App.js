@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { OceanProvider } from '@oceanprotocol/react'
 import { ConfigHelper, Logger } from '@oceanprotocol/lib'
 
 import './App.css'
-import { NetworkMonitor } from './components/NetworkMonitor'
-import { Wallet } from './components/Wallet'
-import { AllDdos } from './components/AllDdos'
-import { Publish } from './components/Publish'
-import { ConsumeDdo } from './components/ConsumeDdo'
+import Main from './pages/Main'
 
 const configRinkeby = new ConfigHelper().getConfig('rinkeby')
 const providerOptions = {}
@@ -29,21 +26,13 @@ function App() {
 
   return (
     <OceanProvider initialConfig={configRinkeby} web3ModalOpts={web3ModalOpts}>
-      <div className="container">
-        <NetworkMonitor />
-        <div>
-          <Wallet />
-        </div>
-        <div>
-          <AllDdos />
-        </div>
-        <div>
-          <Publish />
-        </div>
-        <div>
-          <ConsumeDdo />
-        </div>
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/">
+            <Main />
+          </Route>
+        </Switch>
+      </Router>
     </OceanProvider>
   )
 }
